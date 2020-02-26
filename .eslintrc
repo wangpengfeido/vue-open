@@ -1,0 +1,8 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "sourceType": "module"
+  },
+  "env": { "es6": true },
+  "rules": {}
+}

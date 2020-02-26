@@ -1,0 +1,35 @@
+{
+  "name": "vue-open",
+  "version": "0.0.1",
+  "description": "help to render vue component,instance or component options.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --config ./build/webpack.config.dev.js",
+    "build": "webpack --config ./build/webpack.config.prod.js",
+    "external-build": "webpack --config ./build/webpack.config.external.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangpengfeido/vue-open.git"
+  },
+  "author": "wangpengfei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wangpengfeido/vue-open/issues"
+  },
+  "homepage": "https://github.com/wangpengfeido/vue-open#readme",
+  "dependencies": {
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^3.0.3",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
+  }
+}
