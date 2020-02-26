@@ -1,0 +1,32 @@
+.title {
+  margin-top: 30px;
+}
+
+.test-box {
+  width: 500px;
+  height: 300px;
+  border: 1px solid black;
+}
+.test-box .box-to-append {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  border: 1px solid blue;
+}
+
+.test-comp {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.test-comp-anim-enter,
+.test-comp-anim-leave-to {
+  opacity: 0;
+}
+.test-comp-anim-enter-active,
+.test-comp-anim-leave-active {
+  transition: all 0.2s;
+}
+.test-comp-anim-enter-to,
+.test-comp-anim-leave {
+  opacity: 1;
+}

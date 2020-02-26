@@ -156,11 +156,47 @@ eval("var g; // This works in non-strict mode\n\ng = function () {\n  return thi
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: default */
+/*! exports provided: openComponent, openComponentOptions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.runtime.esm.js\");\n\nconsole.log(vue__WEBPACK_IMPORTED_MODULE_0__[\"default\"]);\n/* harmony default export */ __webpack_exports__[\"default\"] = ('sdf');\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _openComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./openComponent.js */ \"./src/openComponent.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"openComponent\", function() { return _openComponent_js__WEBPACK_IMPORTED_MODULE_0__[\"openComponent\"]; });\n\n/* harmony import */ var _openComponentOptions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./openComponentOptions.js */ \"./src/openComponentOptions.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"openComponentOptions\", function() { return _openComponentOptions_js__WEBPACK_IMPORTED_MODULE_1__[\"openComponentOptions\"]; });\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/openComponent.js":
+/*!******************************!*\
+  !*** ./src/openComponent.js ***!
+  \******************************/
+/*! exports provided: openComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"openComponent\", function() { return openComponent; });\n/* harmony import */ var _openInstance__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./openInstance */ \"./src/openInstance.js\");\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n\n/**\r\n * @param {Element} appendTo\r\n * @param {Function} component\r\n */\n\nfunction openComponent(_ref) {\n  var appendTo = _ref.appendTo,\n      component = _ref.component,\n      callToClose = _ref.callToClose;\n  var instance = new component({\n    el: document.createElement('div')\n  });\n  return _objectSpread({}, Object(_openInstance__WEBPACK_IMPORTED_MODULE_0__[\"openInstance\"])({\n    appendTo: appendTo,\n    instance: instance,\n    callToClose: callToClose\n  }), {\n    instance: instance\n  });\n}\n\n//# sourceURL=webpack:///./src/openComponent.js?");
+
+/***/ }),
+
+/***/ "./src/openComponentOptions.js":
+/*!*************************************!*\
+  !*** ./src/openComponentOptions.js ***!
+  \*************************************/
+/*! exports provided: openComponentOptions */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"openComponentOptions\", function() { return openComponentOptions; });\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.runtime.esm.js\");\n/* harmony import */ var _openComponent_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./openComponent.js */ \"./src/openComponent.js\");\n\n\nfunction openComponentOptions(_ref) {\n  var appendTo = _ref.appendTo,\n      options = _ref.options;\n  var Constructor = vue__WEBPACK_IMPORTED_MODULE_0__[\"default\"].extend(options);\n  var instance = new Constructor();\n  Object(_openComponent_js__WEBPACK_IMPORTED_MODULE_1__[\"openComponent\"])({\n    appendTo: appendTo,\n    instance: instance\n  });\n  return instance;\n}\n\n//# sourceURL=webpack:///./src/openComponentOptions.js?");
+
+/***/ }),
+
+/***/ "./src/openInstance.js":
+/*!*****************************!*\
+  !*** ./src/openInstance.js ***!
+  \*****************************/
+/*! exports provided: openInstance */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"openInstance\", function() { return openInstance; });\n/**\r\n * Append to the element of the vue instance to some dom\r\n * @param {Element} appendTo The dom that the element of the vue instance append to.\r\n * @param {Vue} instance The vue instance.**It's must have rendered.**\r\n */\nfunction openInstance(_ref) {\n  var _ref$appendTo = _ref.appendTo,\n      appendTo = _ref$appendTo === void 0 ? document.body : _ref$appendTo,\n      instance = _ref.instance,\n      callToClose = _ref.callToClose;\n  var el = instance.$el;\n  appendTo.appendChild(el);\n\n  function close() {\n    instance.$destroy();\n    appendTo.removeChild(el);\n  }\n\n  if (callToClose && instance[callToClose]) {\n    instance[callToClose]().then(function () {\n      close();\n    });\n  }\n\n  return {\n    el: el,\n    close: close\n  };\n}\n\n//# sourceURL=webpack:///./src/openInstance.js?");
 
 /***/ })
 

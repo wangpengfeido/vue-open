@@ -1,4 +1,2 @@
-import Vue from 'vue';
-console.log(Vue);
-
-export default 'sdf';
+export { openComponent } from './openComponent.js';
+export { openComponentOptions } from './openComponentOptions.js';
