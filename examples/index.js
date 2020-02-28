@@ -14,7 +14,7 @@ Vue.component('test-box', {
 
 const testComponentOptions = {
   template: `
-    <transition name="test-comp-anim" ref="test-comp-anim">
+    <transition name="test-comp-anim" @after-leave="handleAfterLeave">
       <div class="test-comp" v-show="isShow">
         <div>this is test component.</div>
         <div>
@@ -27,6 +27,7 @@ const testComponentOptions = {
     return {
       isShow: false,
       n: 1,
+      leaveAnimOver: false,
     };
   },
   mounted() {
@@ -36,11 +37,19 @@ const testComponentOptions = {
     add() {
       this.n++;
     },
+    handleAfterLeave() {
+      this.leaveAnimOver = true;
+    },
     callToClose() {
       return new Promise(resolve => {
         setTimeout(() => {
-          console.log('00000000', this.$refs['test-comp-anim']);
-          resolve();
+          this.isShow = false;
+          const unwatch = this.$watch('leaveAnimOver', () => {
+            if (unwatch) {
+              unwatch();
+            }
+            resolve();
+          });
         }, 2000);
       });
     },
