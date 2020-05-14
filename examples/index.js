@@ -13,12 +13,14 @@ Vue.component('test-box', {
 });
 
 const testComponentOptions = {
+  name: 'test',
   template: `
     <transition name="test-comp-anim" @after-leave="handleAfterLeave">
       <div class="test-comp" v-show="isShow">
         <div>this is test component.</div>
         <div>
           <button @click="add()">add {{n}}</button>
+          <button @click="close()">close</button>
         </div>
       </div>
     </transition>
@@ -27,7 +29,6 @@ const testComponentOptions = {
     return {
       isShow: false,
       n: 1,
-      leaveAnimOver: false,
     };
   },
   mounted() {
@@ -37,21 +38,11 @@ const testComponentOptions = {
     add() {
       this.n++;
     },
-    handleAfterLeave() {
-      this.leaveAnimOver = true;
+    close() {
+      this.isShow = false;
     },
-    callToClose() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          this.isShow = false;
-          const unwatch = this.$watch('leaveAnimOver', () => {
-            if (unwatch) {
-              unwatch();
-            }
-            resolve();
-          });
-        }, 2000);
-      });
+    handleAfterLeave() {
+      this.$emit('afterLeave');
     },
   },
 };
@@ -59,15 +50,42 @@ const testComponentOptions = {
 new Vue({
   template: `
     <div>
-      <div class="title">open component:</div>
-      <test-box @open="testOpenComponent($event)"></test-box>
+      <div>
+        <div class="title">open component instance:</div>
+        <test-box @open="testOpenComponentInstance($event)"></test-box>
+      </div>
+      <div>
+        <div class="title">open component:</div>
+        <test-box @open="testOpenComponent($event)"></test-box>
+      </div>
+      <div>
+        <div class="title">open component options:</div>
+        <test-box @open="testOpenComponentOptions($event)"></test-box>
+      </div>
     </div>
   `,
   methods: {
+    testOpenComponentInstance(boxToAppend) {
+      const Component = Vue.extend({ ...testComponentOptions });
+      const instance = new Component({ el: document.createElement('div') });
+      const res = window.vueOpen.open({ appendTo: boxToAppend, toOpen: instance });
+      res.instance.$on('afterLeave', () => {
+        res.close();
+        res.instance.$destroy();
+      });
+    },
     testOpenComponent(boxToAppend) {
-      const Comp = Vue.extend(testComponentOptions);
-      const res = openComponent({ appendTo: boxToAppend, component: Comp, callToClose: 'callToClose' });
-      console.log(res);
+      const Component = Vue.extend({ ...testComponentOptions });
+      const res = window.vueOpen.open({ appendTo: boxToAppend, toOpen: Component });
+      res.instance.$on('afterLeave', () => {
+        res.close();
+      });
+    },
+    testOpenComponentOptions(boxToAppend) {
+      const res = window.vueOpen.open({ appendTo: boxToAppend, toOpen: testComponentOptions });
+      res.instance.$on('afterLeave', () => {
+        res.close();
+      });
     },
   },
 }).$mount('#app');

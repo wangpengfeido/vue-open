@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("vue"));
-	else if(typeof define === 'function' && define.amd)
-		define(["vue"], factory);
-	else {
-		var a = typeof exports === 'object' ? factory(require("vue")) : factory(root["vue"]);
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(window, function(__WEBPACK_EXTERNAL_MODULE_vue__) {
-return /******/ (function(modules) { // webpackBootstrap
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -91,33 +82,134 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
 
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! exports provided: default */
+module.exports = require("vue");
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"vue\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);\n\nconsole.log(vue__WEBPACK_IMPORTED_MODULE_0___default.a);\n/* harmony default export */ __webpack_exports__[\"default\"] = ('sdf');\n\n//# sourceURL=webpack:///./src/index.js?");
+__webpack_require__.r(__webpack_exports__);
 
-/***/ }),
+// CONCATENATED MODULE: ./src/openInstance.js
+/**
+ * Append element of a vue instance to a dom
+ * @param {Element} appendTo A element that the element of the vue instance append to.
+ * @param {Vue} instance A vue instance.
+ * @return {Object} {el,close}
+ *     el: the element of the vue instance
+ *     close: a function call to remove the element from dom
+ */
+function openInstance(_ref) {
+  var _ref$appendTo = _ref.appendTo,
+      appendTo = _ref$appendTo === void 0 ? document.body : _ref$appendTo,
+      instance = _ref.instance;
 
-/***/ "vue":
-/*!**********************!*\
-  !*** external "vue" ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+  if (!instance.$el) {
+    instance.$mount(document.createElement('div'));
+  }
 
-eval("module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;\n\n//# sourceURL=webpack:///external_%22vue%22?");
+  var el = instance.$el;
+  appendTo.appendChild(el);
+
+  function close() {
+    appendTo.removeChild(el);
+  }
+
+  return {
+    el: el,
+    instance: instance,
+    close: close
+  };
+}
+// CONCATENATED MODULE: ./src/openComponent.js
+
+/**
+ * @param {Element} appendTo
+ * @param {typeof Vue} component
+ */
+
+function openComponent(_ref) {
+  var appendTo = _ref.appendTo,
+      component = _ref.component;
+  var instance = new component({
+    el: document.createElement('div')
+  });
+  var res = openInstance({
+    appendTo: appendTo,
+    instance: instance
+  });
+  var close = res.close;
+
+  res.close = function () {
+    instance.$destroy();
+    close();
+  };
+
+  return res;
+}
+// EXTERNAL MODULE: external "vue"
+var external_vue_ = __webpack_require__(0);
+var external_vue_default = /*#__PURE__*/__webpack_require__.n(external_vue_);
+
+// CONCATENATED MODULE: ./src/openComponentOptions.js
+
+
+/**
+ * @param {Element} appendTo
+ * @param {Object} options
+ */
+
+function openComponentOptions(_ref) {
+  var appendTo = _ref.appendTo,
+      options = _ref.options;
+  var component = external_vue_default.a.extend(options);
+  return openComponent({
+    appendTo: appendTo,
+    component: component
+  });
+}
+// CONCATENATED MODULE: ./src/index.js
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+
+
+function src_open(_ref) {
+  var appendTo = _ref.appendTo,
+      toOpen = _ref.toOpen;
+
+  if (toOpen._isVue) {
+    return openInstance({
+      appendTo: appendTo,
+      instance: toOpen
+    });
+  } else if (typeof toOpen === 'function') {
+    return openComponent({
+      appendTo: appendTo,
+      component: toOpen
+    });
+  } else if (_typeof(toOpen) === 'object') {
+    return openComponentOptions({
+      appendTo: appendTo,
+      options: toOpen
+    });
+  } else {
+    throw new Error('vue-open:params of "open" function is not valid');
+  }
+}
+
+/* harmony default export */ var src = __webpack_exports__["default"] = ({
+  open: src_open
+});
 
 /***/ })
-
-/******/ });
-});
+/******/ ])["default"];

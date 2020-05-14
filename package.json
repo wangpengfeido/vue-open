@@ -1,12 +1,19 @@
 {
   "name": "vue-open",
   "version": "0.0.1",
-  "description": "help to render vue component,instance or component options.",
-  "main": "dist/vue-open.external.js",
+  "description": "Open Vue at anywhere.Append Vue to any dom.",
+  "keywords": [
+    "Vue",
+    "open",
+    "dom",
+    "element",
+    "append"
+  ],
+  "main": "dist/vue-open.common.js",
   "scripts": {
-    "dev": "webpack --config ./build/webpack.config.dev.js",
-    "build": "webpack --config ./build/webpack.config.prod.js",
-    "external-build": "webpack --config ./build/webpack.config.external.js",
+    "dist": "npm run dist:common && npm run dist:umd",
+    "dist:common": "webpack --config ./build/webpack.config.common.js",
+    "dist:umd": "webpack --config ./build/webpack.config.umd.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
