@@ -100,11 +100,12 @@ __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./src/openInstance.js
 /**
- * Append element of a vue instance to a dom
- * @param {Element} appendTo A element that the element of the vue instance append to.
- * @param {Vue} instance A vue instance.
- * @return {Object} {el,close}
- *     el: the element of the vue instance
+ * Append element of a Vue instance to a dom
+ * @param {Element} appendTo An element appended to.
+ * @param {Vue} instance A Vue instance.
+ * @return {Object} {el,instance,close}
+ *     el: the element of the Vue instance
+ *     instance: the Vue instance
  *     close: a function call to remove the element from dom
  */
 function openInstance(_ref) {
@@ -132,8 +133,10 @@ function openInstance(_ref) {
 // CONCATENATED MODULE: ./src/openComponent.js
 
 /**
- * @param {Element} appendTo
- * @param {typeof Vue} component
+ * instantiate a Vue component and append it to a dom
+ * @param {Element} appendTo An element appended to.
+ * @param {typeof Vue} component A Vue component.
+ * @return {Object}
  */
 
 function openComponent(_ref) {
@@ -163,8 +166,10 @@ var external_vue_default = /*#__PURE__*/__webpack_require__.n(external_vue_);
 
 
 /**
- * @param {Element} appendTo
- * @param {Object} options
+ * use Vue options to create a Vue Component.Then instantiate it and append to a dom
+ * @param {Element} appendTo An element appended to.
+ * @param {Object} options Vue options.
+ * @return {Object}
  */
 
 function openComponentOptions(_ref) {
@@ -182,6 +187,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 
+/**
+ * Open Vue at anywhere.Append Vue to any dom.
+ * @param {Element} appendTo An element that Vue append to.
+ * @param {Vue|typeof Vue|Object} toOpen
+ *     it could be three possibilities:
+ *         1. A Vue instance.
+ *         2. A Vue component(function). 
+ *         3. Vue options(object).
+ * @return {Object} {el,instance,close}
+ *     el: the element of the Vue instance
+ *     instance: the Vue instance
+ *     close: a function call to remove the element from dom.If "toOpen" in params is not a Vue instance,the Vue instance auto created will be destroyed.
+ */
 
 function src_open(_ref) {
   var appendTo = _ref.appendTo,
