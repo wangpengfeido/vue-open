@@ -12,8 +12,8 @@ import vueOpen from 'vue-open'
 ````
 
 ## API
-### vueOpen.open({ appendTo, instance })
-* **appendTo** ````<Element>```` An element that Vue append to.
+### vueOpen.open({ appendTo, toOpen })
+* **appendTo** ````<Element>```` An element that Vue append to.It is options,default is ````document.body````.
 * **toOpen** ````<Vue|typeof Vue|Object>```` It could be three possibilities:
   * A Vue instance.
   * A Vue component(function).
